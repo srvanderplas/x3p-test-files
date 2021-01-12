@@ -2,7 +2,7 @@ library(png)
 library(imager)
 library(tidyverse)
 library(x3ptools)
-tmp <- load.image("cmc_test.png")
+tmp <- load.image("cartridge-center-radius-shift/cmc_test.png")
 tmp2 <- as.cimg(tmp[,,,1:3])
 tmp2 <- grayscale(tmp2)
 # plot(tmp2)
@@ -35,9 +35,9 @@ tmp2 <- grayscale(tmp2)
 #          mask = map2(center, radius, ~mask_cir(off_center = .x, radius = .y))
 #   )
 #
-# masked_data <- mutate(masked_data, name = sprintf("center_rad_%04d_offset_%03d_%03d.x3p", radius, center1, center2))
-# write_rds(masked_data, "Masked_data.Rds")
-masked_data <- read_rds("Masked_data.Rds")
+# masked_data <- mutate(masked_data, name = sprintf("cartridge-center-radius-shift/center_rad_%04d_offset_%03d_%03d.x3p", radius, center1, center2))
+# write_rds(masked_data, "cartridge-center-radius-shift/Masked_data.Rds")
+masked_data <- read_rds("cartridge-center-radius-shift/Masked_data.Rds")
 library(x3ptools)
 
 matrix_to_x3p <- function(x, name) {
@@ -52,5 +52,5 @@ matrix_to_x3p <- function(x, name) {
 # image_x3p(read_x3p("center_rad_0900_offset_000_000.x3p"))
 
 masked_data %>%
-  filter(!name %in% list.files(".", "*.x3p"))
+  filter(!name %in% list.files("cartridge-center-radius-shift/", "*.x3p"))
 purrr::walk2(masked_data$mask, masked_data$name, matrix_to_x3p)
